@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DPI - PRO MANAGEMENT SYSTEM</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/solaimanlipi" rel="stylesheet">
+  
+    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f2f2f7; color: #1c1c1e; overflow-x: hidden; }
+        
+        /* iOS Style Cards */
+        .ios-card { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(20px); 
+            border-radius: 24px; 
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            padding: 20px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ios-input { 
+            width: 100%; padding: 12px 16px; background: #f2f2f7; border-radius: 14px; 
+            border: 1px solid transparent; outline: none; transition: 0.3s; font-size: 15px;
+        }
+        .ios-input:focus { background: #ffffff; border-color: #007aff; box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1); }
+
+        /* Floating Nav Bar */
+        #bottomNav { 
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(25px) saturate(180%); 
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px; height: 70px; display: flex; 
+            justify-content: space-around; align-items: center; z-index: 1000; 
+            border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+        }
+
+        .nav-item { 
+            position: relative; display: flex; flex-direction: column; align-items: center; 
+            color: #8e8e93; cursor: pointer; transition: 0.4s; width: 50px; height: 50px; justify-content: center;
+        }
+
+        .nav-item.active { 
+            color: #ffffff; background: #007aff; transform: translateY(-20px) scale(1.1); 
+            border-radius: 50%; box-shadow: 0 10px 20px rgba(0, 122, 255, 0.4);
+        }
+
+        .nav-item i { font-size: 24px; }
+        .nav-item span { font-size: 10px; font-weight: bold; position: absolute; bottom: -25px; opacity: 0; color: #007aff; transition: 0.3s; }
+        .nav-item.active span { opacity: 1; bottom: -22px; }
+
+        /* প্রিমিয়াম ব্যাকগ্রাউন্ড ও মডার্ন ইফেক্টস */
+.login-bg {
+    background: 
+        radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.12) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.12) 0, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(244, 63, 94, 0.05) 0, transparent 50%);
+    background-color: #f8fafc;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 40px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.08);
+}
+.premium-btn {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.premium-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.5);
+}
+.floating-label {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+        /* Print Design */
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100%; display: block !important; background: white; padding: 0; }
+            @page { size: portrait; margin: 1cm; }
+        }
+        .fail-text { color: red !important; font-weight: bold; }
+   
+ /* প্রিমিয়াম লগইন ইউআই স্টাইল */
+.red-alert-box {
+    background: rgba(255, 59, 48, 0.08);
+    border: 1.5px solid rgba(255, 59, 48, 0.2);
+    border-radius: 20px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+}
+/* লোগো এবং লগইন কার্ডের কম্প্যাক্ট ডিজাইন */
+.logo-container {
+    width: 160px; /* লোগো আরও বড় করা হয়েছে */
+    height: 160px;
+    margin: 0 auto;
+    background: transparent; /* বাড়তি সাদা ব্যাকগ্রাউন্ড রিমুভ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.logo-img {
+    width: 100%; 
+    height: 100%;
+    object-fit: contain;
+    /* লোগোর কালার ফুটিয়ে তুলতে শ্যাডো */
+    filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.15));
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(25px);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 35px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    padding: 24px !important; /* প্যাডিং কমানো হয়েছে যাতে লম্বা কম হয় */
+}
+/*এর ঠিক আগে এটি বসাও */
+    .swal2-popup { 
+        border-radius: 30px !important; 
+        font-family: 'Hind Siliguri', sans-serif; 
+        background: rgba(255, 255, 255, 0.9) !important; 
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    }
+    .swal2-title { color: #1c1c1e !important; font-weight: 800 !important; }
+    .swal2-confirm { 
+        border-radius: 12px !important; 
+        background: #007aff !important; 
+        font-weight: 700 !important;
+        padding: 12px 30px !important;
+    }
+
+
+/* কালারফুল এবং বোল্ড টাইটেল স্টাইল */
+.colorful-title {
+    background: linear-gradient(135deg, #007aff 0%, #5856d6 50%, #ff2d55 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+.system-badge {
+    background: rgba(0, 122, 255, 0.1);
+    color: #007aff;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 800;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.header-logo {
+    width: 90px; /* ৫০ থেকে বাড়িয়ে ৯০ পিক্সেল করা হয়েছে */
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    /* লোগোটিকে আরও ঝকঝকে দেখানোর জন্য প্রিমিয়াম গ্লো শ্যাডো */
+    filter: drop-shadow(0 8px 20px rgba(0, 122, 255, 0.25));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.header-logo:hover {
+    transform: scale(1.08); /* মাউস নিলে বা টাচ করলে হালকা বড় হবে */
+}
+@media print {
+    #printArea * {
+        line-height: 1.6 !important;
+        letter-spacing: 0.5px !important;
+        overflow: visible !important;
+    }
+    table td, table th {
+        padding: 8px 4px !important;
+    }
+}
+
+@media print {
+    #printArea, #printArea * {
+        font-family: 'SolaimanLipi', Arial, sans-serif !important;
+        overflow: visible !important;
+        line-height: 1.4 !important; /* লাইন হাইট কিছুটা কমানো হলো */
+        letter-spacing: 0 !important; /* লেটার স্পেসিং জিরো করে দেওয়া হলো */
+    }
+    table td, table th {
+        padding: 6px 4px !important; /* প্যাডিং কিছুটা কমানো হলো যাতে ঘিঞ্জি না লাগে */
+    }
+}
+
+/* প্রিমিয়াম সেটিংস ইউআই */
+.settings-header-icon {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+    margin-bottom: 15px;
+}
+.dev-card-pro {
+    background: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative; overflow: hidden;
+}
+.dev-card-pro::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+.pro-badge {
+    background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+    color: #000; padding: 2px 10px; border-radius: 50px;
+    font-size: 9px; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 1px; display: inline-block;
+}
+
+/* জলছাপের (Watermark) ডিজাইন */
+.watermark-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 450px; /* লোগোর সাইজ */
+    opacity: 0.06; /* জলছাপের হালকা ভাব (এটি ০.০৬ রাখা হয়েছে যাতে লেখা স্পষ্ট বোঝা যায়) */
+    z-index: 0;
+    pointer-events: none;
+}
+.watermark-container img {
+    width: 100%;
+    height: auto;
+    /* ইমেজ কোয়ালিটি ইনহ্যান্স করার জন্য ফিল্টার */
+    filter: contrast(1.2) brightness(1.1);
+}
+.print-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+    </style>
+</head>
+<body class="pb-24">
+
+   <!-- MODERN LOGIN INTERFACE BY JIHAD -->
+    <div id="page-login" class="min-h-screen login-bg flex flex-col items-center justify-center p-6">
+        
+        <div class="w-full max-w-sm">
+            
+            <!-- ১. লাল নির্দেশনা বক্স (সবার উপরে) -->
+            <div class="red-alert-box mb-8 animate__animated animate__fadeInDown text-center">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <i class="ri-error-warning-fill text-red-600"></i>
+                    <p class="text-[12px] font-black text-red-600 uppercase">জরুরী নির্দেশনা</p>
+                </div>
+                <p class="text-[11px] font-bold text-red-500 leading-snug">
+                    অনুমোদিত অ্যাডমিন ছাড়া প্রবেশ সম্পূর্ণ নিষিদ্ধ। আপনার অ্যাক্টিভিটি ট্র্যাক করা হচ্ছে।
+                </p>
+            </div>
+
+            <!-- ২. মেইন গ্লাস কার্ড -->
+            <div class="glass-card animate__animated animate__zoomIn">
+                <div class="text-center">
+                    <!-- লোগো সেকশন (বড় এবং গ্যাপ কম) -->
+                    <div class="logo-container mb-2">
+                        <img src="https://i.ibb.co.com/21WHGNS2/1776422586746-removebg-preview.png" 
+                             alt="DPI Logo" class="logo-img">
+                    </div>
+                    
+                    <!-- টাইটেল সেকশন (মার্জিন কমানো হয়েছে) -->
+                    <div class="system-badge mb-1">Verified Admin</div>
+                    <h1 class="text-2xl font-black colorful-title leading-tight">DPI EDITOR PRO</h1>
+                    <h2 class="text-lg font-bold text-slate-700">ডিপিআই এডিটর</h2>
+                    
+                    <div class="h-1 w-12 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mt-2 mb-4"></div>
+                </div>
+
+                <div class="space-y-3"> <!-- গ্যাপ ৪ থেকে কমিয়ে ৩ করা হয়েছে -->
+                    <!-- ইউজার আইডি -->
+                    <div class="relative group">
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500">
+                            <i class="ri-user-star-line text-lg"></i>
+                        </div>
+                        <input type="text" id="login-user" placeholder="ইউজার আইডি" 
+                               class="ios-input w-full py-3 pl-11 pr-4 font-bold text-gray-700 bg-gray-50/50 text-sm">
+                    </div>
+
+                    <!-- পাসওয়ার্ড -->
+                    <div class="relative group">
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500">
+                            <i class="ri-lock-password-line text-lg"></i>
+                        </div>
+                        <input type="password" id="login-pass" placeholder="পাসওয়ার্ড" 
+                               class="ios-input w-full py-3 pl-11 pr-11 font-bold text-gray-700 bg-gray-50/50 text-sm">
+                        <button onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i id="eye-icon" class="ri-eye-off-line"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-[9px] text-center text-slate-400 font-bold uppercase tracking-widest my-1">
+                        Security Authentication
+                    </p>
+
+                    <!-- বাটন -->
+                    <button onclick="handleLogin()" 
+                            class="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-black text-base shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3">
+                        <span>প্রবেশ করুন</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ৩. ক্রেডিট ফুটার (নিচে) -->
+            <div class="mt-10 text-center animate__animated animate__fadeInUp">
+                <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.5em] mb-1">Developed By</p>
+                <p class="text-2xl font-black italic text-gray-800 opacity-60">JIHAD</p>
+                <p class="text-[9px] font-bold text-blue-600/50 mt-4 uppercase">দক্ষিণ বঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা</p>
+            </div>
+        </div>
+    </div>
+<!-- MAIN APPLICATION (DIV STRUCTURE FULLY FIXED BY AI) -->
+    <div id="main-app" class="hidden">
+        
+        <!-- প্রফেশনাল সেন্টারড হেডার -->
+        <header class="p-6 bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-100 relative overflow-hidden">
+            <!-- শাটডাউন বাটন -->
+            <button onclick="logout()" class="absolute right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-red-50 text-red-500 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-all">
+                <i class="ri-shut-down-line text-xl"></i>
+            </button>
+
+            <!-- মেইন কন্টেন্ট (সেন্টারড) -->
+            <div class="flex flex-col items-center text-center mt-2">
+                <img src="https://i.ibb.co.com/21WHGNS2/1776422586746-removebg-preview.png" alt="Logo" class="header-logo">
+                
+                <h1 class="text-2xl font-black colorful-title tracking-tight uppercase">DPI EDITOR Pro</h1>
+                <div class="h-[3px] w-10 bg-blue-600 rounded-full my-2"></div>
+                
+                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.15em] px-4">
+                    দক্ষিণ বঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা
+                </p>
+            </div>
+        </header>
+
+        <!-- ১. হোম পেজ (HOME PAGE) -->
+        <div id="page-home" class="p-5 page animate__animated animate__fadeIn">
+            <!-- ড্যাশবোর্ড কার্ড -->
+            <div class="ios-card bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg mb-6 py-4 px-5 border-none relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-20 h-20 bg-white/10 rounded-full"></div>
+                <div class="flex items-center justify-between relative z-10">
+                    <div>
+                        <h2 class="text-lg font-bold">হ্যালো, অ্যাডমিন! 👋</h2>
+                        <p class="text-[11px] opacity-90 font-medium">ডিজিটাল ম্যানেজমেন্ট সিস্টেমে স্বাগতম</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 justify-end">
+                            <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                            <span class="text-[9px] font-bold uppercase tracking-wider">Online</span>
+                        </div>
+                        <p class="text-[9px] opacity-70 mt-1">DPI EDITOR V2.0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ড্যাশবোর্ড গ্রিড (সকল বাটন এখানে) -->
+            <div class="ios-card bg-white shadow-sm border-none p-6">
+                <div class="grid grid-cols-3 gap-y-8 gap-x-4">
+                    <div onclick="showPage('result')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-blue-100">
+                            <img src="https://i.postimg.cc/d1sXyCb6/clipboard.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">রেজাল্ট<br>মেকার</span>
+                    </div>
+                    <div onclick="showPage('notice')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-orange-100">
+                            <img src="https://i.postimg.cc/6p7RQSVx/megaphone.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">অফিসিয়াল<br>নোটিশ</span>
+                    </div>
+                    <div onclick="showPage('routine')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-green-100">
+                            <img src="https://img.icons8.com/fluency/96/calendar.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">ক্লাস<br>রুটিন</span>
+                    </div>
+                    <div onclick="showPage('exam-routine')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-purple-100">
+                            <img src="https://img.icons8.com/fluency/96/test-passed.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">পরীক্ষার<br>রুটিন</span>
+                    </div>
+                    <!-- নতুন প্রশ্নপত্র তৈরি বাটন -->
+                    <div onclick="showPage('question')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-indigo-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-indigo-100">
+                            <img src="https://img.icons8.com/fluency/96/edit-file.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">প্রশ্নপত্র<br>তৈরি</span>
+                    </div>
+                    <div onclick="showPage('settings')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-slate-200">
+                            <img src="https://img.icons8.com/fluency/96/settings.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">সিস্টেম<br>সেটিংস</span>
+                    </div>
+                    <div onclick="Swal.fire('সহায়তা', 'যোগাযোগ: 01340975230', 'question')" class="flex flex-col items-center group cursor-pointer">
+                        <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-2 group-active:scale-90 transition-all shadow-sm border border-red-100">
+                            <img src="https://img.icons8.com/fluency/96/customer-support.png" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[11px] font-bold text-slate-600 text-center leading-tight">সহায়তা<br>কেন্দ্র</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ২. রেজাল্ট পেজ (RESULT PAGE) -->
+        <div id="page-result" class="p-5 hidden page animate__animated animate__fadeIn">
+            <h2 class="text-xl font-black mb-4">রেজাল্ট জেনারেটর</h2>
+            <div class="ios-card space-y-4 mb-6">
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="res-dept" class="ios-input text-xs font-bold" onchange="loadSubjectsAutomatically()">
+                        <option value="">ডিপার্টমেন্ট</option>
+                        <option>Civil</option><option>Electrical</option><option>Mechanical</option><option>Computer</option>
+                    </select>
+                    <select id="res-sem" class="ios-input text-xs font-bold" onchange="loadSubjectsAutomatically()">
+                        <option value="">সেমিস্টার</option>
+                        <option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option>
+                    </select>
+                </div>
+                <input type="text" id="exam-name" placeholder="পরীক্ষার নাম (উদা: প্রাক মূল্যায়ন)" class="ios-input text-xs font-bold">
+                <div id="sub-setup-container" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                <button onclick="lockSubjects()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold shadow-md">বই লক করুন</button>
+            </div>
+            <div id="marks-entry-area" class="hidden ios-card border-2 border-blue-200">
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <input type="text" id="stu-roll" placeholder="রোল নম্বর" class="ios-input text-sm">
+                    <input type="text" id="stu-name" placeholder="নাম" class="ios-input text-sm">
+                </div>
+                <div id="dynamic-marks-inputs" class="grid grid-cols-2 gap-2"></div>
+                <button onclick="addStudentData()" class="w-full bg-green-500 text-white py-3 rounded-xl font-bold mt-4 shadow-md">তালিকায় যোগ করুন</button>
+            </div>
+            <div id="live-list-container" class="mt-6 hidden">
+                <h3 class="text-xs font-bold text-gray-500 mb-2">সংযুক্ত শিক্ষার্থীর তালিকা:</h3>
+                <div class="ios-card p-0 overflow-hidden">
+                    <table class="w-full text-xs">
+                        <thead class="bg-gray-50">
+                            <tr><th class="p-3 text-left">রোল</th><th class="p-3 text-left">নাম</th><th class="p-3 text-center">অ্যাকশন</th></tr>
+                        </thead>
+                        <tbody id="live-student-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <button onclick="finalizeAndPrint()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold mt-6 shadow-xl active:scale-95 transition">রেজাল্ট শিট ডাউনলোড করুন</button>
+        </div>
+
+        <!-- ৩. নোটিশ পেজ (NOTICE PAGE) -->
+        <div id="page-notice" class="p-5 hidden page animate__animated animate__fadeIn">
+            <h2 class="text-xl font-black mb-4">নোটিশ তৈরি</h2>
+            <div class="ios-card space-y-4">
+                <input type="text" id="not-sub" placeholder="নোটিশের বিষয়" class="ios-input font-bold">
+                <textarea id="not-msg" rows="8" class="ios-input" placeholder="বিস্তারিত এখানে লিখুন..."></textarea>
+                <button onclick="printNotice()" class="w-full bg-orange-500 text-white py-4 rounded-2xl font-bold shadow-lg">প্রিন্ট করুন</button>
+            </div>
+        </div>
+
+        <!-- ৪. ক্লাস রুটিন পেজ (ROUTINE PAGE) -->
+        <div id="page-routine" class="p-5 hidden page animate__animated animate__fadeIn">
+            <h2 class="text-xl font-black mb-4 text-blue-600">ক্লাস রুটিন প্রো</h2>
+            <div class="ios-card space-y-3 mb-6">
+                <input type="text" id="rou-title" placeholder="রুটিনের শিরোনাম" class="ios-input text-sm">
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="rou-dept" class="ios-input text-xs" onchange="updateRoutineSubjects()">
+                        <option value="">ডিপার্টমেন্ট</option>
+   <option value="সকল">সকল টেকনোলজি</option>                      <option>Civil</option><option>Electrical</option><option>Mechanical</option><option>Computer</option>
+                    </select>
+                    <select id="rou-sem" class="ios-input text-xs" onchange="updateRoutineSubjects()">
+                        <option value="">সেমিস্টার</option>
+                        <option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="rou-day" class="ios-input text-xs">
+                        <option>শনি</option><option>রবি</option><option>সোম</option><option>মঙ্গল</option><option>বুধ</option><option>বৃহস্পতি</option>
+                    </select>
+                   <!-- সময় পিকার (২৪ ঘণ্টা) -->
+<div>
+    <label class="text-[9px] font-bold text-gray-400 pl-1 uppercase">সময় (শুরু - শেষ)</label>
+    <div class="flex gap-1">
+        <input type="time" id="rou-time-start" class="ios-input text-[10px] p-1">
+        <input type="time" id="rou-time-end" class="ios-input text-[10px] p-1">
+    </div>
+</div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="rou-sub-auto" class="ios-input text-[11px]"></select>
+                    <input type="text" id="rou-sub-manual" placeholder="অন্য বই" class="ios-input text-[11px]">
+                </div>
+                <input type="text" id="rou-teacher" placeholder="শিক্ষকের নাম" class="ios-input text-xs">
+                <button onclick="addRoutineSlot()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold shadow-md">স্লট যোগ করুন</button>
+            </div>
+            <div id="routine-preview-area" class="space-y-3"></div>
+            <button onclick="printRoutineSheet()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold mt-6 shadow-xl active:scale-95 transition">রুটিন ডাউনলোড করুন</button>
+        </div>
+
+       <!-- ৫. পরীক্ষার রুটিন পেজ (FIXED) -->
+        <div id="page-exam-routine" class="p-5 hidden page animate__animated animate__fadeIn">
+            <h2 class="text-xl font-black mb-4 text-purple-600 text-center">পরীক্ষার রুটিন মেকার</h2>
+            
+            <div class="ios-card space-y-3 mb-6">
+                <input type="text" id="ex-rou-title" placeholder="রুটিনের শিরোনাম (উদা: প্রাক-মূল্যায়ন)" class="ios-input text-sm">
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="ex-rou-dept" class="ios-input text-xs font-bold" onchange="updateExamSubjects()">
+                        <option value="">ডিপার্টমেন্ট</option>
+                        <option value="সকল">সকল টেকনোলজি</option>
+                        <option value="Civil">Civil</option><option value="Electrical">Electrical</option>
+                        <option value="Mechanical">Mechanical</option><option value="Computer">Computer</option>
+                        <option value="Surveying">Surveying</option>
+                    </select>
+                    <select id="ex-rou-sem" class="ios-input text-xs font-bold" onchange="updateExamSubjects()">
+                        <option value="">সেমিস্টার</option>
+                        <option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+    <!-- ডেট পিকার (ক্যালেন্ডার) -->
+    <div>
+        <label class="text-[9px] font-bold text-gray-400 pl-1 uppercase">তারিখ সিলেক্ট করুন</label>
+        <input type="date" id="ex-rou-date" class="ios-input text-xs">
+    </div>
+    <!-- বার ড্রপডাউন -->
+    <div>
+        <label class="text-[9px] font-bold text-gray-400 pl-1 uppercase">বার সিলেক্ট করুন</label>
+        <select id="ex-rou-day" class="ios-input text-xs">
+            <option value="শনিবার">শনিবার</option><option value="রবিবার">রবিবার</option>
+            <option value="সোমবার">সোমবার</option><option value="মঙ্গলবার">মঙ্গলবার</option>
+            <option value="বুধবার">বুধবার</option><option value="বৃহস্পতিবার">বৃহস্পতিবার</option>
+        </select>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 gap-2">
+    <div class="col-span-1">
+        <label class="text-[9px] font-bold text-gray-400 pl-1 uppercase">বই সিলেক্ট করুন</label>
+        <select id="ex-rou-sub-auto" class="ios-input text-[11px]"></select>
+    </div>
+    <!-- সময় পিকার (২৪ ঘণ্টা) -->
+    <div>
+        <label class="text-[9px] font-bold text-gray-400 pl-1 uppercase">সময় (শুরু - শেষ)</label>
+        <div class="flex gap-1">
+            <input type="time" id="ex-rou-time-start" class="ios-input text-[10px] p-1">
+            <input type="time" id="ex-rou-time-end" class="ios-input text-[10px] p-1">
+        </div>
+    </div>
+</div>
+                <input type="text" id="ex-rou-sub-manual" placeholder="অন্য বই (যদি লিস্টে না থাকে)" class="ios-input text-xs">
+                
+                <button onclick="addExamRoutineSlot()" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold shadow-md active:scale-95 transition">স্লট যোগ করুন</button>
+            </div>
+
+            <!-- স্লটগুলো এখানে দেখাবে (এই কন্টেইনারটি জরুরি) -->
+            <div id="exam-preview-area" class="space-y-3 mt-4 mb-10">
+                <p class="text-center text-gray-400 text-xs italic">এখনো কোনো স্লট যোগ করা হয়নি।</p>
+            </div>
+
+            <button onclick="printExamRoutine()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-xl active:scale-95 transition">পরীক্ষার রুটিন ডাউনলোড করুন</button>
+        </div>
+
+        <!-- ৬. প্রশ্নপত্র মেকার পেজ (QUESTION MAKER) -->
+        <div id="page-question" class="p-5 hidden page animate__animated animate__fadeIn">
+            <h2 class="text-xl font-black mb-4 text-indigo-600">প্রশ্নপত্র মেকার</h2>
+            <div class="ios-card space-y-3 mb-6">
+                <input type="text" id="q-exam-title" placeholder="পরীক্ষার নাম" class="ios-input text-sm">
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="q-dept" class="ios-input text-xs font-bold" onchange="updateQuestionSubjects()">
+    <option value="">ডিপার্টমেন্ট</option>
+    <option value="সকল">সকল টেকনোলজি</option> <!-- এই নতুন লাইনটি যোগ হলো -->
+    <option value="Civil">Civil</option>
+    <option value="Electrical">Electrical</option>
+    <option value="Mechanical">Mechanical</option>
+    <option value="Computer">Computer</option>
+</select>
+                    <select id="q-sem" class="ios-input text-xs" onchange="updateQuestionSubjects()">
+                        <option value="">সেমিস্টার</option>
+                        <option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="q-sub-auto" class="ios-input text-[11px]"></select>
+                    <input type="text" id="q-sub-manual" placeholder="অন্য বই" class="ios-input text-[11px]">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" id="q-time" placeholder="সময় (উদা: ৩ ঘণ্টা)" class="ios-input text-xs">
+                    <input type="text" id="q-marks" placeholder="পূর্ণমান (উদা: ৯০)" class="ios-input text-xs">
+                </div>
+               <!-- অ্যাডভান্স ম্যাথ গাইড -->
+            <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl mb-4">
+                <p class="text-[11px] font-bold text-indigo-700 mb-2 flex items-center gap-1">
+                    <i class="ri-functions"></i> জটিল অংক লেখার নিয়ম (LaTeX):
+                </p>
+                <div class="grid grid-cols-1 gap-2 text-[10px] text-indigo-600 font-medium">
+                    <div class="bg-white p-2 rounded-lg border border-indigo-50">
+                        <b>১. ভগ্নাংশ (Fraction):</b> <code class="text-pink-600">\( \frac{লব}{হর} \)</code> <br>
+                        <span class="text-gray-400">উদা: \( \frac{x}{2x+1} \) লিখতে টাইপ করুন: <code>\( \frac{x}{2x+1} \)</code></span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-indigo-50">
+                        <b>২. লিমিট (Limit):</b> <code class="text-pink-600">\( \lim_{x \to \infty} \)</code> <br>
+                        <span class="text-gray-400">উদা: ছবির অংকটির জন্য: <code>\( \lim_{x \to \infty} \frac{x}{2x+1} \)</code></span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-indigo-50">
+                        <b>৩. ডিফারেন্সিয়েশন:</b> <code class="text-pink-600">\( \frac{d}{dx} \)</code> <br>
+                        <span class="text-gray-400">উদা: <code>\( \frac{d}{dx}(e^x) \)</code></span>
+                    </div>
+                    <div class="bg-white p-2 rounded-lg border border-indigo-50">
+                        <b>৪. পাওয়ার ও রুট:</b> পাওয়ারের জন্য <code class="text-pink-600">x^2</code> আর রুটের জন্য <code class="text-pink-600">\sqrt{x}</code>
+                    </div>
+                </div>
+                <p class="text-[9px] mt-2 text-red-500 font-bold">* অবশ্যই অংকের শুরুতে \( এবং শেষে \) দিতে হবে।</p>
+            </div>
+                <textarea id="q-instructions" rows="2" class="ios-input text-xs" placeholder="বিশেষ নির্দেশ..."></textarea>
+                <!-- ক-বিভাগ -->
+                <div class="space-y-2">
+                    <input type="text" id="q-part-a-marks" placeholder="ক-বিভাগ নম্বর (উদা: ১০ x ২ = ২০)" class="ios-input text-[11px] bg-indigo-50/50">
+                    <textarea id="q-part-a" rows="3" class="ios-input text-xs" placeholder="ক-বিভাগের প্রশ্নগুলো (প্রতিটি আলাদা লাইনে)..."></textarea>
+                </div>
+                
+                <!-- খ-বিভাগ -->
+                <div class="space-y-2">
+                    <input type="text" id="q-part-b-marks" placeholder="খ-বিভাগ নম্বর (উদা: ৫ x ৪ = ২০)" class="ios-input text-[11px] bg-indigo-50/50">
+                    <textarea id="q-part-b" rows="3" class="ios-input text-xs" placeholder="খ-বিভাগের প্রশ্নগুলো (প্রতিটি আলাদা লাইনে)..."></textarea>
+                </div>
+                
+                <!-- গ-বিভাগ -->
+                <div class="space-y-2">
+                    <input type="text" id="q-part-c-marks" placeholder="গ-বিভাগ নম্বর (উদা: ৫ x ১০ = ৫০)" class="ios-input text-[11px] bg-indigo-50/50">
+                    <textarea id="q-part-c" rows="3" class="ios-input text-xs" placeholder="গ-বিভাগের প্রশ্নগুলো (প্রতিটি আলাদা লাইনে)..."></textarea>
+                </div>
+            </div>
+            <button onclick="printQuestionSheet()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-xl active:scale-95 transition">প্রশ্নপত্র ডাউনলোড করুন</button>
+        </div>
+
+       <!-- ৬. সেটিংস পেজ (ULTIMATE PRO EDITION) -->
+        <div id="page-settings" class="p-5 hidden page animate__animated animate__fadeIn">
+            
+            <!-- হেডার সেকশন -->
+            <div class="flex flex-col items-center mb-8">
+                <div class="settings-header-icon">
+                    <i class="ri-settings-5-fill text-white text-3xl animate-spin-slow"></i>
+                </div>
+                <h2 class="text-2xl font-black text-slate-800">কন্ট্রোল সেন্টার</h2>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Management Pro System</p>
+            </div>
+
+            <!-- ১. অ্যাডমিন সিকিউরিটি কার্ড -->
+            <div class="ios-card mb-6 border-none shadow-xl">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="ri-shield-keyhole-line text-xl"></i>
+                    </div>
+                    <h3 class="text-sm font-black text-slate-700 uppercase tracking-wider">লগইন সিকিউরিটি</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="relative">
+                        <label class="text-[10px] font-bold text-slate-400 pl-1 uppercase">অ্যাডমিন ইউজার আইডি</label>
+                        <input type="text" id="set-user" class="ios-input mt-1 font-bold text-slate-700" placeholder="নতুন আইডি দিন">
+                    </div>
+                    <div class="relative">
+                        <label class="text-[10px] font-bold text-slate-400 pl-1 uppercase">অ্যাডমিন পাসওয়ার্ড</label>
+                        <input type="password" id="set-pass" class="ios-input mt-1 font-bold text-slate-700" placeholder="নতুন পাসওয়ার্ড দিন">
+                    </div>
+                    <button onclick="updateSecurity()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                        <span>সিকিউরিটি আপডেট করুন</span>
+                        <i class="ri-refresh-line"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ২. ডেভেলপার প্রোফাইল কার্ড (MD JIHAD HOSSAIN) -->
+            <div class="dev-card-pro p-6 rounded-[35px] shadow-2xl mb-6">
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="pro-badge">Verified System Architect</div>
+                        <i class="ri-verified-badge-fill text-blue-400 text-2xl"></i>
+                    </div>
+                    
+                    <p class="text-[10px] font-black text-indigo-300 uppercase tracking-[0.3em]">Lead Developer</p>
+                    <h2 class="text-3xl font-black text-white italic tracking-tighter mt-1">MD JIHAD HOSSAIN</h2>
+                    
+                    <div class="h-[1px] w-full bg-white/10 my-5"></div>
+                    
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        এই ডিজিটাল ইকোসিস্টেমটি দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউটের প্রশাসনিক কার্যক্রমকে গতিশীল এবং আধুনিকীকরণের লক্ষ্যে ডিজাইন ও ডেভেলপ করা হয়েছে।
+                    </p>
+
+                    <div class="flex gap-3 mt-6">
+                        <div class="bg-white/5 p-3 rounded-2xl flex-1 text-center">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase">Version</p>
+                            <p class="text-sm font-black text-white">2.5.0 Gold</p>
+                        </div>
+                        <div class="bg-white/5 p-3 rounded-2xl flex-1 text-center">
+                            <p class="text-[9px] font-bold text-slate-500 uppercase">Engine</p>
+                            <p class="text-sm font-black text-white">v8-Pro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ৩. ডেঞ্জার জোন -->
+            <div class="ios-card bg-red-50 border border-red-100 p-5 rounded-[30px]">
+                <div class="flex items-center gap-3 mb-4 text-red-600">
+                    <i class="ri-error-warning-line text-2xl animate-pulse"></i>
+                    <h3 class="text-sm font-black uppercase tracking-wider">সিস্টেম ক্লিনার</h3>
+                </div>
+                <p class="text-[11px] text-red-400 font-medium mb-4">এক ক্লিকে সকল সেভ করা রেজাল্ট, রুটিন এবং স্লট ডাটা মুছে ফেলুন। এটি অপরিবর্তনীয়।</p>
+                <button onclick="clearAllSystemData()" class="w-full bg-red-500 text-white py-3.5 rounded-2xl font-black shadow-md active:scale-95 transition-all">
+                    ফ্যাক্টরি রিসেট (রিসেট অল)
+                </button>
+            </div>
+
+            <!-- ৪. কন্টাক্ট সাপোর্ট -->
+            <div class="mt-8 mb-12 text-center">
+                <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-3">Technical Support</p>
+                <a href="tel:01340975230" class="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm border border-slate-100">
+                    <i class="ri-phone-fill text-green-500 text-lg"></i>
+                    <span class="text-sm font-black text-slate-700">01340975230</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- বটম নেভিগেশন বার -->
+        <nav id="bottomNav">
+            <div class="nav-item active" onclick="showPage('home')"><i class="ri-home-5-line"></i><span>হোম</span></div>
+            <div class="nav-item" onclick="showPage('result')"><i class="ri-medal-line"></i><span>রেজাল্ট</span></div>
+            <div class="nav-item" onclick="showPage('notice')"><i class="ri-notification-3-line"></i><span>নোটিশ</span></div>
+            <div class="nav-item" onclick="showPage('routine')"><i class="ri-calendar-event-line"></i><span>রুটিন</span></div>
+        </nav>
+
+    </div> <!-- main-app end -->
+    </div>
+    
+    <div id="printArea" class="hidden"></div>
+
+    <script>
+        
+        const watermarkHtml = `<div class="watermark-container"><img src="https://i.postimg.cc/j5vNRRyp/Screenshot-2025-10-21-09-04-01-401-com-android-chrome-edit-removebg-preview.png"></div>`;
+       
+        function toBn(text) {
+    if (text === null || text === undefined) return "";
+    const bn = { '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪', '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯' };
+    // এখন আর কোনো বাড়তি স্পেস নেই, সব নরমাল আসবে
+    return String(text).replace(/[0-9]/g, x => bn[x]);
+}
+                
+        let appUser = localStorage.getItem("appUser") || "DPI1234";
+let appPass = localStorage.getItem("appPass") || "DPI1234";
+        
+        // ঠিক এখানে এই লাইনটি বসাও
+        const iosAlert = {
+            showClass: { popup: 'animate__animated animate__fadeInUp animate__faster' },
+            hideClass: { popup: 'animate__animated animate__fadeOutDown animate__faster' }
+        };
+        
+// ওয়েবসাইট বা ব্রাউজারের জন্য সেরা পিডিএফ ইঞ্জিন
+function downloadAsPDF(elementId, fileName) {
+    const element = document.getElementById(elementId);
+    element.classList.remove('hidden'); // প্রিন্ট এরিয়া দেখাও
+
+    // প্রফেশনাল লোডিং অ্যালার্ট
+    Swal.fire({
+        title: 'পিডিএফ তৈরি হচ্ছে...',
+        html: 'দয়া করে কিছুক্ষণ অপেক্ষা করুন।',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+    });
+
+    const options = {
+        margin: [10, 10, 10, 10],
+        filename: fileName + '.pdf',
+        image: { type: 'jpeg', quality: 1 }, // সর্বোচ্চ কোয়ালিটি
+        html2canvas: { 
+            scale: 2.5, // ওয়েবসাইট হিসেবে চলবে তাই স্কেল বাড়ানো হয়েছে (পরিষ্কার দেখাবে)
+            useCORS: true,
+            letterRendering: true
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // ডাউনলোড প্রসেস
+    html2pdf().set(options).from(element).save().then(() => {
+        element.classList.add('hidden'); // আবার হাইড করো
+        Swal.close();
+        Swal.fire({ icon: 'success', title: 'সফল!', text: 'ফাইলটি আপনার ডাউনলোড ফোল্ডারে সেভ হয়েছে।', timer: 2000, showConfirmButton: false, ...iosAlert });
+    }).catch(err => {
+        element.classList.add('hidden');
+        Swal.fire('দুঃখিত!', 'পিডিএফ তৈরি করা যায়নি। আবার চেষ্টা করুন।', 'error');
+    });
+}
+        // বইয়ের বিশাল ডাটাবেস (প্রবিধান-২০২২)
+        const subjectDatabase = {
+            "Civil": {
+                "১ম": ["ইঞ্জিনিয়ারিং ড্রয়িং", "বাংলা-১", "ইংরেজি-১", "সোশ্যাল সায়েন্স", "গণিত-১", "রসায়ন", "সিভিল ইঞ্জিনিয়ারিং মেটেরিয়ালস", "বেসিক ইলেকট্রিসিটি"],
+                "২য়": ["বাংলা-২", "ইংরেজি-২", "শারীরিক শিক্ষা ও জীবন দক্ষতা", "পদার্থবিজ্ঞান-১", "গণিত-২", "সিভিল ইঞ্জিনিয়ারিং ড্রয়িং", "বেসিক ইলেকট্রনিক্স", "বেসিক ওয়ার্কশপ প্র্যাকটিস"],
+                "৩য়": ["সিভিল ইঞ্জিনিয়ারিং ড্রয়িং (CAD)-১", "সার্ভেয়িং-১", "স্ট্রাকচারাল মেকানিক্স", "গণিত-৩", "পদার্থবিজ্ঞান-২", "সোশ্যাল সায়েন্স-২"],
+                "৪র্থ": ["সিভিল ইঞ্জিনিয়ারিং ড্রয়িং-২ (CAD)", "সার্ভেয়িং-২", "এস্টিমেটিং অ্যান্ড কস্টিং-১", "জিওটেকনিক্যাল ইঞ্জিনিয়ারিং", "বিজনেস কমিউনিকেশন"],
+                "৫ম": ["ডিজাইন অফ স্ট্রাকচার-১", "ওয়াটার সাপ্লাই ইঞ্জিনিয়ারিং", "থিওরি অফ স্ট্রাকচার", "হাইড্রোলিক্স"],
+                "৬ষ্ঠ": ["ডিজাইন অফ স্ট্রাকচার-২", "ট্রান্সপোর্টেশন ইঞ্জিনিয়ারিং-১", "ফাউন্ডেশন ইঞ্জিনিয়ারিং", "সিভিল ইঞ্জিনিয়ারিং সফটওয়্যার"],
+                "৭ম": ["ডিজাইন অফ স্ট্রাকচার-৩", "ট্রান্সপোর্টেশন ইঞ্জিনিয়ারিং-২", "কনস্ট্রাকশন ম্যানেজমেন্ট", "স্যানিটারি ইঞ্জিনিয়ারিং"]
+            },
+            "Electrical": {
+                "১ম": ["বাংলা-১", "ইংরেজি-১", "গণিত-১", "পদার্থবিজ্ঞান-১", "ইঞ্জিনিয়ারিং ড্রয়িং", "বেসিক ইলেকট্রিসিটি", "কম্পিউটার অফিস অ্যাপ্লিকেশন"],
+                "২য়": ["বাংলা-২", "ইংরেজি-২", "শারীরিক শিক্ষা ও জীবন দক্ষতা", "রসায়ন", "গণিত-২", "ইলেকট্রিক্যাল সার্কিট-১", "বেসিক ইলেকট্রনিক্স"],
+                "৩য়": ["গণিত-৩", "পদার্থবিজ্ঞান-২", "ইলেকট্রিক্যাল সার্কিট-২", "ইলেকট্রিক্যাল অ্যাপ্লায়েন্সেস", "ইন্ডাস্ট্রিয়াল ইলেকট্রনিক্স"],
+                "৪র্থ": ["ডিসি মেশিন", "ইলেকট্রিক্যাল মেজারমেন্ট অ্যান্ড ইনস্ট্রুমেন্টেশন-১", "ইলেকট্রিক্যাল ইন্সটলেশন প্ল্যানিং", "সোশ্যাল সায়েন্স"],
+                "৫ম": ["এসি মেশিন-১", "ইলেকট্রিক্যাল মেজারমেন্ট অ্যান্ড ইনস্ট্রুমেন্টেশন-২", "জেনারেশন অফ ইলেকট্রিক্যাল পাওয়ার", "ডিজিটাল ইলেকট্রনিক্স"],
+                "৬ষ্ঠ": ["এসি মেশিন-২", "ট্রান্সমিশন অ্যান্ড ডিস্ট্রিবিউশন-১", "সুইচগিয়ার ও প্রোটেকশন", "ইন্ডাস্ট্রিয়াল ম্যানেজমেন্ট"],
+                "৭ম": ["ট্রান্সমিশন অ্যান্ড ডিস্ট্রিবিউশন-২", "ইলেকট্রিক্যাল ড্রাইভস ও কন্ট্রোল", "টেস্টিং ও মেইনটেন্যান্স", "রিনিউয়েবল এনার্জি"]
+            },
+            "Mechanical": {
+                "১ম": ["বাংলা-১", "ইংরেজি-১", "সোশ্যাল সায়েন্স", "গণিত-১", "পদার্থবিজ্ঞান-১", "ইঞ্জিনিয়ারিং ড্রয়িং", "বেসিক ওয়ার্কশপ প্র্যাকটিস"],
+                "২য়": ["বাংলা-২", "ইংরেজি-২", "শারীরিক শিক্ষা ও জীবন দক্ষতা", "রসায়ন", "গণিত-২", "বেসিক ইলেকট্রিসিটি", "মেকানিক্যাল ইঞ্জিনিয়ারিং ড্রয়িং-১"],
+                "৩য়": ["মেকানিক্যাল ইঞ্জিনিয়ারিং মেটেরিয়ালস", "গণিত-৩", "পদার্থবিজ্ঞান-২", "বেসিক ইলেকট্রনিক্স", "মেশিন শপ প্র্যাকটিস-১", "ম্যানুফ্যাকচারিং প্রসেস-১"],
+                "৪র্থ": ["থার্মোডাইনামিক্স", "অ্যাপ্লাইড মেকানিক্স", "মেশিন শপ প্র্যাকটিস-২", "মেকানিক্যাল মেজারমেন্টস"],
+                "৫ম": ["হাইড্রোলিক্স ও হাইড্রোলিক মেশিনারি", "অ্যাডভান্সড ওয়েল্ডিং", "ফাউন্ড্রি ও প্যাটার্ন মেকিং", "প্রোগ্রামিং ইন সি"],
+                "৬ষ্ঠ": ["স্ট্রেংথ অফ মেটেরিয়ালস", "ক্যাড অ্যান্ড ক্যাম", "প্ল্যান্ট ইঞ্জিনিয়ারিং ও মেইনটেন্যান্স", "মেট্রোলজি"],
+                "৭ম": ["মেশিন ডিজাইন", "টুল ডিজাইন", "হিট ইঞ্জিন", "প্রোডাকশন প্ল্যানিং ও কন্ট্রোল"]
+            },
+            "Computer": {
+                "১ম": ["বাংলা-১", "ইংরেজি-১", "গণিত-১", "পদার্থবিজ্ঞান-১", "ইঞ্জিনিয়ারিং ড্রয়িং", "বেসিক ইলেকট্রিসিটি", "কম্পিউটার অফিস অ্যাপ্লিকেশন"],
+                "২য়": ["বাংলা-২", "ইংরেজি-২", "শারীরিক শিক্ষা ও জীবন দক্ষতা", "রসায়ন", "গণিত-২", "পাইথন প্রোগ্রামিং", "বেসিক ইলেকট্রনিক্স"],
+                "৩য়": ["গণিত-৩", "পদার্থবিজ্ঞান-২", "ডেটা স্ট্রাকচার ও অ্যালগরিদম", "ডিজিটাল ইলেকট্রনিক্স-১", "অবজেক্ট ওরিয়েন্টেড প্রোগ্রামিং"],
+                "৪র্থ": ["অপারেটিং সিস্টেম ফান্ডামেন্টালস", "ডিজিটাল ইলেকট্রনিক্স-২", "ওয়েব ডেভেলপমেন্ট ফান্ডামেন্টালস", "ডেটাবেস ম্যানেজমেন্ট সিস্টেম"],
+                "৫ম": ["কম্পিউটার আর্কিটেকচার", "জাভা প্রোগ্রামিং", "নেটওয়ার্ক ফান্ডামেন্টালস", "গ্রাফিক্স ডিজাইন"],
+                "৬ষ্ঠ": ["সাইবার সিকিউরিটি", "ডেটা কমিউনিকেশন", "মাইক্রোপ্রসেসর ও ইন্টারফেসিং", "ইন্ডাস্ট্রিয়াল ম্যানেজমেন্ট"],
+                "৭ম": ["সিস্টেম অ্যানালাইসিস ও ডিজাইন", "অ্যাপ ডেভেলপমেন্ট", "নেটওয়ার্ক অ্যাডমিনিস্ট্রেশন", "কম্পিউটার পেরিফেরালস"]
+            },
+            "Surveying": {
+                "১ম": ["বাংলা-১", "ইংরেজি-১", "গণিত-১", "পদার্থবিজ্ঞান-১", "ইঞ্জিনিয়ারিং ড্রয়িং", "বেসিক ইলেকট্রিসিটি", "সোশ্যাল সায়েন্স"],
+                "২য়": ["বাংলা-২", "ইংরেজি-২", "শারীরিক শিক্ষা", "গণিত-২", "পদার্থবিজ্ঞান-২", "কম্পিউটার অফিস অ্যাপ:", "বেসিক সার্ভেয়িং"],
+                "৩য়": ["গণিত-৩", "রসায়ন", "চেইন ও কম্পাস সার্ভেয়িং", "প্লেন টেবিল সার্ভেয়িং", "স্ট্রাকচারাল মেকানিক্স"],
+                "৪র্থ": ["এরিয়াল ফটোগ্রাফি", "ফান্ডামেন্টালস অফ জিআইএস", "অ্যাডভান্সড সার্ভেয়িং-১", "ডিজিটাল কার্টোগ্রাফি"],
+                "৫ম": ["থিওডোলাইট সার্ভেয়িং", "রুট সার্ভেয়িং", "টপোগ্রাফিক সার্ভেয়িং", "এস্টিমেটিং ও কস্টিং"]
+            }
+        }; // এই একটি ব্র্যাকেটই পুরো ডাটাবেস শেষ করবে
+    
+        let lockedSubjects = [], studentsList = [], routineData = {}, examRoutineData = {};
+
+       // INITIALIZATION (Fixed for Exam Routine Data)
+        window.onload = function() {
+            if(localStorage.getItem("isLoggedIn") === "true") {
+                document.getElementById('page-login').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+                initSubjectInputs();
+                
+                // আগের সেভ করা ডাটাগুলো লোড করা
+                if(localStorage.getItem("routineData")) { 
+                    routineData = JSON.parse(localStorage.getItem("routineData")); 
+                    renderRoutinePreview(); 
+                }
+                if(localStorage.getItem("studentsList")) { 
+                    studentsList = JSON.parse(localStorage.getItem("studentsList")); 
+                    renderLiveList(); 
+                }
+                if(localStorage.getItem("examRoutineData")) { 
+                    examRoutineData = JSON.parse(localStorage.getItem("examRoutineData")); 
+                    renderExamPreview(); 
+                }
+            }
+        }
+        function saveData() { localStorage.setItem("routineData", JSON.stringify(routineData)); localStorage.setItem("studentsList", JSON.stringify(studentsList)); }
+
+       
+       // AUTH FUNCTIONS (FIXED)
+        function handleLogin() {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+
+            // মেমোরি থেকে ডাটা নেওয়া
+            let currentU = localStorage.getItem("appUser") || "DPI1234";
+            let currentP = localStorage.getItem("appPass") || "DPI1234";
+
+            if (u === currentU && p === currentP) {
+                // স্মার্ট লোডিং অ্যালার্ট
+                Swal.fire({
+                    title: 'ভেরিফাই হচ্ছে...',
+                    html: 'আপনার অ্যাডমিন এক্সেস নিশ্চিত করা হচ্ছে।',
+                    timer: 1500,
+                    allowOutsideClick: false,
+                    didOpen: () => { Swal.showLoading(); },
+                    ...iosAlert
+                }).then(() => {
+                    localStorage.setItem("isLoggedIn", "true");
+                    location.reload();
+                });
+            } else {
+                Swal.fire({ 
+                    icon: 'error', 
+                    title: 'এক্সেস ডিনাইড!', 
+                    text: 'ইউজার আইডি বা পাসওয়ার্ড সঠিক নয়।', 
+                    confirmButtonColor: '#ff3b30', 
+                    ...iosAlert 
+                });
+            }
+        }
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            location.reload();
+        }
+
+        function togglePassword() {
+            const p = document.getElementById('login-pass');
+            const i = document.getElementById('eye-icon');
+            if (p.type === 'password') {
+                p.type = 'text';
+                i.className = 'ri-eye-line';
+            } else {
+                p.type = 'password';
+                i.className = 'ri-eye-off-line';
+            }
+        }
+       
+        // UI FUNCTIONS
+        // পেজ সুইচ করার জন্য শক্তিশালী ফাংশন
+// পেজ সুইচিং মাস্টার ফাংশন (সব পেজ সাপোর্টসহ)
+        function showPage(pageId) {
+            // ১. সব পেজ আগে হাইড করো
+            const allPages = document.querySelectorAll('.page');
+            allPages.forEach(p => {
+                p.classList.add('hidden');
+                p.classList.remove('animate__animated', 'animate__fadeIn');
+            });
+
+            // ২. কাঙ্ক্ষিত পেজটি দেখাও
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('animate__animated', 'animate__fadeIn');
+            }
+
+            // ৩. নেভিগেশন বারের আইকন আপডেট করা
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(n => n.classList.remove('active'));
+            
+            // মেইন ৪টি পেজের জন্য নেভ বার হাইলাইট করো
+            if (pageId === 'home') navItems[0].classList.add('active');
+            else if (pageId === 'result') navItems[1].classList.add('active');
+            else if (pageId === 'notice') navItems[2].classList.add('active');
+            else if (pageId === 'routine') navItems[3].classList.add('active');
+            // সাব-পেজগুলোর (settings, exam-routine, question) ক্ষেত্রে নেভ বার হাইলাইট করার দরকার নেই
+
+            // ৪. স্ক্রিন অটোমেটিক উপরে চলে যাবে
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        // RESULT FUNCTIONS
+        function shortName(name) {
+            if(!name) return "";
+            return name.replace(/ইঞ্জিনিয়ারিং/g, 'ইঞ্জি:').replace(/ইলেকট্রিক্যাল/g, 'ইলেক্ট্রি:').replace(/মেকানিক্যাল/g, 'মেকা:').replace(/ম্যানেজমেন্ট/g, 'ম্যাজ:').replace(/অ্যাপ্লিকেশন/g, 'অ্যাপ:').replace(/ফান্ডামেন্টালস/g, 'ফান্ডা:');
+        }
+
+        function initSubjectInputs() {
+            const c = document.getElementById('sub-setup-container'); c.innerHTML = "";
+            for(let i=1; i<=10; i++) c.innerHTML += `<div class="flex gap-2"><span class="text-xs font-bold w-6 mt-3 text-gray-400">${i}.</span><input type="text" id="sub-name-${i}" placeholder="বইয়ের নাম" class="ios-input text-xs w-2/3"><input type="number" id="sub-full-${i}" placeholder="মান" class="ios-input text-xs w-1/3"></div>`;
+        }
+
+        // রেজাল্ট সাবজেক্ট অটো-লোড এবং ম্যানুয়াল এন্ট্রি সুবিধা
+        function loadSubjectsAutomatically() {
+            const d = document.getElementById('res-dept').value;
+            const s = document.getElementById('res-sem').value;
+            const container = document.getElementById('sub-setup-container');
+            
+            // আগে কন্টেইনার খালি করা
+            container.innerHTML = ""; 
+            
+            // ডাটাবেস থেকে বইয়ের লিস্ট নেওয়া (যদি থাকে)
+            const dbSubjects = (d && s && subjectDatabase[d] && subjectDatabase[d][s]) ? subjectDatabase[d][s] : [];
+
+            // ১০টি ঘর তৈরি করা
+            for(let i=1; i<=10; i++) {
+                // যদি ডাটাবেসে বই থাকে তবে সেটা বসবে, নাহলে খালি থাকবে (ঐচ্ছিক বইয়ের জন্য)
+                let subName = dbSubjects[i-1] ? shortName(dbSubjects[i-1]) : "";
+                let fullMark = dbSubjects[i-1] ? "60" : ""; // ডাটাবেসের বইয়ের জন্য ডিফল্ট ৬০
+
+                container.innerHTML += `
+                    <div class="flex gap-2">
+                        <span class="text-xs font-bold w-6 mt-3 text-gray-400">${i}.</span>
+                        <input type="text" id="sub-name-${i}" value="${subName}" placeholder="বইয়ের নাম (ঐচ্ছিক)" class="ios-input text-[11px] w-2/3">
+                        <input type="number" id="sub-full-${i}" value="${fullMark}" placeholder="মান" class="ios-input text-[11px] w-1/3">
+                    </div>`;
+            }
+        }
+        function lockSubjects() {
+            lockedSubjects = [];
+            for(let i=1; i<=10; i++) {
+                const n = document.getElementById(`sub-name-${i}`), f = document.getElementById(`sub-full-${i}`);
+                if(n && f && n.value && f.value) lockedSubjects.push({ name: n.value, full: parseFloat(f.value) });
+            }
+            
+            if(!lockedSubjects.length) {
+                return Swal.fire({ 
+                    icon: 'warning', 
+                    title: 'সতর্কতা', 
+                    text: 'বইয়ের তালিকা খালি!', 
+                    confirmButtonColor: '#007aff', 
+                    ...iosAlert 
+                });
+            }
+
+            document.getElementById('dynamic-marks-inputs').innerHTML = lockedSubjects.map(s => `<div><label class="text-[9px] font-black text-gray-400 pl-1">${s.name} (${s.full})</label><input type="number" class="stu-ob-mark ios-input" placeholder="প্রাপ্ত"></div>`).join('');
+            document.getElementById('marks-entry-area').classList.remove('hidden');
+            
+            Swal.fire({ 
+                icon: 'success', 
+                title: 'সফল', 
+                text: 'বই লক হয়েছে। এখন নম্বর দিন।', 
+                confirmButtonColor: '#007aff', 
+                ...iosAlert 
+            });
+        }
+
+        function addStudentData() {
+            const r = document.getElementById('stu-roll').value, n = document.getElementById('stu-name').value, obs = document.querySelectorAll('.stu-ob-mark');
+            
+            if(!r || !n) {
+                return Swal.fire({ 
+                    icon: 'error', 
+                    title: 'ভুল', 
+                    text: 'রোল ও নাম দিন।', 
+                    confirmButtonColor: '#ff3b30', 
+                    ...iosAlert 
+                });
+            }
+
+            let obtained = [], failed = false;
+            obs.forEach((o, i) => { 
+                const v = parseFloat(o.value) || 0; 
+                if(v < lockedSubjects[i].full * 0.4) failed = true; 
+                obtained.push(v); 
+            });
+
+            studentsList.push({ roll: r, name: n, obtained, status: failed ? 'ফেল' : 'পাশ' });
+            
+            document.getElementById('stu-roll').value = ""; 
+            document.getElementById('stu-name').value = ""; 
+            obs.forEach(o => o.value = "");
+            
+            renderLiveList(); 
+            saveData();
+
+            // শিক্ষার্থী যোগ হওয়ার পর একটি ছোট সাকসেস টোস্ট
+            Swal.fire({ 
+                icon: 'success', 
+                title: 'তালিকায় যোগ হয়েছে', 
+                timer: 1000, 
+                showConfirmButton: false, 
+                ...iosAlert 
+            });
+        }
+
+        function renderLiveList() {
+            const c = document.getElementById('live-list-container'), b = document.getElementById('live-student-body');
+            if(studentsList.length) { c.classList.remove('hidden'); b.innerHTML = studentsList.map((st, i) => `<tr class="border-t"><td>${st.roll}</td><td>${st.name}</td><td class="text-center p-2"><button onclick="deleteStudent(${i})" class="text-red-500"><i class="ri-delete-bin-line"></i></button></td></tr>`).join(''); }
+            else c.classList.add('hidden');
+        }
+
+        function deleteStudent(i) { studentsList.splice(i, 1); renderLiveList(); saveData(); }
+
+        function finalizeAndPrint() {
+    if(studentsList.length === 0) return Swal.fire({ icon: 'info', title: 'ফাঁকা!', text: 'শিক্ষার্থী যোগ করুন।', ...iosAlert });
+
+    const deptEng = document.getElementById('res-dept').value;
+    const sem = document.getElementById('res-sem').value || "N/A";
+    const exam = document.getElementById('exam-name').value || "প্রাক মূল্যায়ন পরীক্ষা";
+    const printArea = document.getElementById('printArea');
+
+    const deptMapping = { "Civil": "সিভিল", "Electrical": "ইলেকট্রিক্যাল", "Mechanical": "মেকানিক্যাল", "Computer": "কম্পিউটার", "Surveying": "সার্ভেয়িং" };
+    const deptBn = deptMapping[deptEng] || deptEng;
+
+    let tableHeader = `<tr style="background: #ffffff;">
+        <th style="border: 1px solid black; padding: 10px 5px; font-size: 11px; font-weight: 600;">ক্র: নং</th>
+        <th style="border: 1px solid black; padding: 10px 5px; font-size: 11px; font-weight: 600; width: 140px;">শিক্ষার্থীর নাম</th>
+        ${lockedSubjects.map(s => `<th style="border: 1px solid black; padding: 10px 5px; font-size: 10px; font-weight: 600; line-height: 1.4;">${s.name}<br>(${toBn(s.full)})</th>`).join('')}
+        <th style="border: 1px solid black; padding: 10px 5px; font-size: 11px; font-weight: 600;">ফলাফল</th>
+    </tr>`;
+
+    let tableRows = studentsList.map((st, index) => {
+        let marksCells = st.obtained.map((m, idx) => {
+            const fail = m < (lockedSubjects[idx].full * 0.4);
+            return `<td style="border: 1px solid black; padding: 10px 5px; font-size: 11px; line-height: 1.6; ${fail ? 'color: red; font-weight: bold;' : 'font-weight: normal;'}">${toBn(m)}</td>`;
+        }).join('');
+        return `<tr>
+            <td style="border: 1px solid black; padding: 10px 5px; font-size: 11px;">${toBn(index + 1)}</td>
+            <td style="border: 1px solid black; padding: 10px 8px; font-size: 11px; text-align: left; font-weight: 500;">${st.name}</td>
+            ${marksCells}
+            <td style="border: 1px solid black; padding: 10px 5px; font-size: 11px; font-weight: 500; ${st.status === 'ফেল' ? 'color: red;' : ''}">${st.status}</td>
+        </tr>`;
+    }).join('');
+
+    printArea.innerHTML = `<div style="font-family: 'SolaimanLipi', Arial, sans-serif; position: relative; padding: 40px 50px; background: white; color: black; line-height: 1.4;">${watermarkHtml}
+        <div style="text-align: center; margin-bottom: 25px;">
+            <h1 style="font-size: 24px; font-weight: bold; margin: 0;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা</h1>
+            <h2 style="font-size: 17px; font-weight: 600; margin: 8px 0; text-decoration: underline;">${toBn(exam)}- ২০২৬</h2>
+            <h3 style="font-size: 15px; font-weight: 500; margin: 0;">টেকনোলজি: ${deptBn} (${sem} পর্ব)</h3>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; text-align: center; border: 1px solid black;">
+            <thead>${tableHeader}</thead>
+            <tbody>${tableRows}</tbody>
+        </table>
+        <div style="margin-top: 80px; display: flex; justify-content: flex-end;">
+            <div style="text-align: center; width: 220px;">
+                <p style="border-top: 1px solid black; padding-top: 5px; font-weight: bold; font-size: 16px;">অধ্যক্ষ</p>
+                <p style="font-size: 13px; margin-top: 2px;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা।</p>
+            </div>
+        </div>
+    </div>`;
+    setTimeout(() => { window.print(); }, 500);
+}
+        // নোটিশ প্রিন্ট
+        function printNotice() {
+            const sub = document.getElementById('not-sub').value;
+            const msg = document.getElementById('not-msg').value;
+            if(!sub || !msg) return Swal.fire({ icon: 'warning', title: 'অসম্পূর্ণ!', text: 'বিষয় ও বিস্তারিত লিখুন।', ...iosAlert });
+
+            const printArea = document.getElementById('printArea');
+            const today = new Date().toLocaleDateString('bn-BD');
+            
+            printArea.innerHTML = `<div style="font-family: 'SolaimanLipi', Arial, sans-serif; position: relative; padding: 60px 80px; background: white; color: black; min-height: 100vh; line-height: 1.8;">${watermarkHtml}
+                <div style="text-align: center; border-bottom: 1.5px solid black; padding-bottom: 8px; margin-bottom: 30px;">
+                    <h1 style="font-size: 22px; font-weight: bold; margin: 0;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা</h1>
+                    <div style="display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; font-weight: normal;">
+                        <span>ইনস্টিটিউট কোডঃ ${toBn('40052')}</span><span>EIIN: ${toBn('137061')}</span><span>মোবাইল: ${toBn('01715006432')}</span>
+                    </div>
+                </div>
+                <p style="text-align: right; font-size: 14px; font-weight: 500; margin-bottom: 20px;">তারিখ: ${toBn(today)}</p>
+                <div style="text-align: center; margin-bottom: 40px;"><h2 style="display: inline-block; font-size: 18px; font-weight: 600; border-bottom: 1.2px solid black; padding-bottom: 1px;">${sub}</h2></div>
+                <div style="font-size: 16px; text-align: justify; white-space: pre-wrap; min-height: 300px; line-height: 2;">${toBn(msg)}</div>
+                <div style="margin-top: 100px; display: flex; justify-content: flex-end;">
+                    <div style="text-align: center; width: 220px; border-top: 1px solid black; padding-top: 8px;">
+                        <p style="font-size: 16px; font-weight: bold;">(নীলুফার ইয়াসমিন)</p>
+                        <p style="font-size: 13px; font-weight: 600;">অধ্যক্ষ / পরিচালক</p>
+                        <p style="font-size: 12px;">দক্ষিণবঙ্গ পলিটেকনিক ইন্সঃ ভোলা।</p>
+                    </div>
+                </div>
+            </div>`;
+            setTimeout(() => { window.print(); }, 500);
+        }
+
+        // রুটিন ফাংশনসমূহ
+        function updateRoutineSubjects() {
+            let d = document.getElementById('rou-dept').value;
+            const s = document.getElementById('rou-sem').value;
+            const sel = document.getElementById('rou-sub-auto');
+            if(d === "সকল") d = "Civil"; 
+            sel.innerHTML = `<option value="">বই সিলেক্ট করুন</option>`;
+            if (d && s && subjectDatabase[d] && subjectDatabase[d][s]) {
+                subjectDatabase[d][s].forEach(b => sel.innerHTML += `<option value="${b}">${b}</option>`);
+            }
+        }
+
+        function addRoutineSlot() {
+            const d = document.getElementById('rou-day').value;
+            const tStart = document.getElementById('rou-time-start').value;
+            const tEnd = document.getElementById('rou-time-end').value;
+            const de = document.getElementById('rou-dept').value || "All";
+            const s = document.getElementById('rou-sub-manual').value || document.getElementById('rou-sub-auto').value;
+            const te = document.getElementById('rou-teacher').value;
+
+            if (!tStart || !s || !te) {
+                return Swal.fire({ icon: 'warning', title: 'অসম্পূর্ণ!', text: 'সময়, বই এবং শিক্ষকের নাম দিন।', ...iosAlert });
+            }
+
+            // ১২:০০ (০০:০০) ফিক্স করার সহকারী ফাংশন
+            const formatRoutineTime = (timeStr) => {
+                if(!timeStr) return "";
+                let [h, m] = timeStr.split(':');
+                if(h === "00") h = "12";
+                if(h.startsWith('0') && h !== "00") h = h.substring(1);
+                return `${h}:${m}`;
+            };
+
+            const t = `${formatRoutineTime(tStart)} - ${formatRoutineTime(tEnd) || '...'}`;
+
+            if (!routineData[d]) routineData[d] = {}; 
+            if (!routineData[d][t]) routineData[d][t] = [];
+            
+            routineData[d][t].push({ dept: de, sub: s, teacher: te });
+
+            renderRoutinePreview(); 
+            saveData();
+
+            Swal.fire({ icon: 'success', title: 'সফল', timer: 1000, showConfirmButton: false, ...iosAlert });
+            
+            // ইনপুট ক্লিয়ার
+            document.getElementById('rou-sub-manual').value = "";
+            document.getElementById('rou-teacher').value = "";
+        }
+
+        function renderRoutinePreview() {
+            const a = document.getElementById('routine-preview-area'); a.innerHTML = `<h3 class="text-xs font-bold text-gray-400 mb-2">বর্তমান স্লটসমূহ:</h3>`;
+            for (let d in routineData) for (let t in routineData[d]) routineData[d][t].forEach((item, i) => { a.innerHTML += `<div class="ios-card flex justify-between items-center p-3 mb-2 border-l-4 border-blue-500"><div><span class="text-[9px] font-bold text-blue-600">${d} | ${t} | ${item.dept}</span><p class="text-sm font-bold mt-1">${item.sub} - ${item.teacher}</p></div><button onclick="deleteRoutineSlot('${d}','${t}',${i})" class="text-red-400"><i class="ri-delete-bin-line"></i></button></div>`; });
+        }
+
+        function deleteRoutineSlot(d, t, i) { routineData[d][t].splice(i, 1); if(!routineData[d][t].length) delete routineData[d][t]; renderRoutinePreview(); saveData(); }
+
+        function printRoutineSheet() {
+            const title = document.getElementById('rou-title').value || "ক্লাস রুটিন-২০২৬";
+            const deptEng = document.getElementById('rou-dept').value;
+            const sem = document.getElementById('rou-sem').value || "N/A";
+            const printArea = document.getElementById('printArea');
+            
+            const deptMapping = { 
+                "সকল": "সকল টেকনোলজি", "Civil": "সিভিল", "Electrical": "ইলেকট্রিক্যাল", 
+                "Mechanical": "মেকানিক্যাল", "Computer": "কম্পিউটার", "Surveying": "সার্ভেয়িং" 
+            };
+            const deptBn = deptMapping[deptEng] || deptEng;
+
+            let timeSet = new Set();
+            for (let d in routineData) {
+                for (let t in routineData[d]) {
+                    timeSet.add(t);
+                }
+            }
+            let timeArray = Array.from(timeSet).sort();
+
+            let tableHeader = `<tr style="background: #f1f5f9; color: #1e3a8a;">
+                <th style="border: 1px solid #000; padding: 6px 2px; font-size: 11px; width: 45px;">বার</th>
+                ${timeArray.map(t => `<th style="border: 1px solid #000; padding: 6px 2px; font-size: 11px; font-weight: bold;">${toBn(t)}</th>`).join('')}
+            </tr>`;
+
+            const days = ["শনি", "রবি", "সোম", "মঙ্গল", "বুধ", "বৃহস্পতি"];
+            let tableRows = days.map(day => {
+                if(!routineData[day]) return "";
+                return `<tr>
+                    <td style="border: 1px solid #000; padding: 8px 2px; font-weight: bold; background: #f8fafc; text-align:center; font-size: 12px;">${day}</td>
+                    ${timeArray.map(time => {
+                        let slots = routineData[day][time] || [];
+                        return `<td style="border: 1px solid #000; padding: 2px; vertical-align: top; background: white;">
+                            ${slots.map((s, idx) => {
+                                // "সকল" হলে নাম দেখাবে না, অন্য ডিপার্টমেন্ট হলে ছোট করে ব্র্যাকেটে দেখাবে
+                                let deptPrefix = (s.dept === "সকল" || s.dept === "All") ? "" : `[${deptMapping[s.dept] || s.dept}] `;
+                                
+                                return `
+                                <div style="margin-bottom: 4px; text-align: center; line-height: 1.1; ${idx < slots.length-1 ? 'border-bottom: 0.5px dotted #ccc; padding-bottom: 2px;' : ''}">
+                                    <div style="font-weight: 800; font-size: 10px; color: #000;">${deptPrefix}${shortName(s.sub)}</div>
+                                    <div style="font-size: 9px; color: #555; font-weight: 600;">${s.teacher}</div>
+                                </div>`;
+                            }).join('')}
+                        </td>`;
+                    }).join('')}
+                </tr>`;
+            }).join('');
+
+            printArea.innerHTML = `
+                <div style="font-family: 'SolaimanLipi', Arial, sans-serif; padding: 20px; background: white; color: black; line-height: 1.2;">
+                    <div style="text-align: center; margin-bottom: 15px;">
+                        <h1 style="font-size: 20px; font-weight: bold; margin: 0;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা</h1>
+                        <p style="font-size: 14px; font-weight: 600; margin: 5px 0;">${toBn(title)}</p>
+                        <p style="font-size: 12px; font-weight: 500; margin: 0;">টেকনোলজি: ${deptBn} | পর্ব: ${sem}</p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; table-layout: fixed;">
+                        <thead>${tableHeader}</thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+
+                    <div style="margin-top: 40px; display: flex; justify-content: space-between; padding: 0 20px; font-size: 11px; font-weight: bold;">
+                        <p style="border-top: 1px solid black; width: 100px; text-align:center; padding-top: 3px;">প্রস্তুতকারক</p>
+                        <p style="border-top: 1px solid black; width: 100px; text-align:center; padding-top: 3px;">অধ্যক্ষ</p>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => { window.print(); }, 500);
+        }
+        
+        // ১০. পরীক্ষার রুটিন লজিক (Error & Null Fixed)
+        function updateExamSubjects() {
+            const deptEl = document.getElementById('ex-rou-dept');
+            const semEl = document.getElementById('ex-rou-sem');
+            const selEl = document.getElementById('ex-rou-sub-auto');
+
+            if (!deptEl || !semEl || !selEl) return;
+
+            let d = deptEl.value;
+            const s = semEl.value;
+            if (d === "সকল") d = "Civil"; 
+
+            selEl.innerHTML = `<option value="">বই সিলেক্ট করুন</option>`;
+            if (d && s && subjectDatabase[d] && subjectDatabase[d][s]) {
+                subjectDatabase[d][s].forEach(b => selEl.innerHTML += `<option value="${b}">${b}</option>`);
+            }
+        }
+
+        function addExamRoutineSlot() {
+            const rawDate = document.getElementById('ex-rou-date').value;
+            const day = document.getElementById('ex-rou-day').value;
+            const tStart = document.getElementById('ex-rou-time-start').value;
+            const tEnd = document.getElementById('ex-rou-time-end').value;
+            const sub = document.getElementById('ex-rou-sub-manual').value || document.getElementById('ex-rou-sub-auto').value;
+            
+            if(!rawDate || !sub || !tStart) return Swal.fire({ icon: 'warning', title: 'অসম্পূর্ণ!', text: 'তারিখ, বই এবং সময় দিন।', ...iosAlert });
+
+            // তারিখ ফরম্যাট (DD-MM-YYYY)
+            const dateParts = rawDate.split('-');
+            const date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+            // সময় ফরম্যাট করার সহকারী ফাংশন (00 কে 12 বানাবে)
+            const formatTime = (timeStr) => {
+                if(!timeStr) return "";
+                let [h, m] = timeStr.split(':');
+                // যদি রাত ১২টা (00) হয় তবে তাকে ১২ বানিয়ে দাও
+                if(h === "00") h = "12";
+                // যদি ঘণ্টার আগে ০ থাকে (যেমন ০৫:৩০) তবে ০ সরিয়ে ৫:৩০ করো (ঐচ্ছিক)
+                if(h.startsWith('0') && h !== "00") h = h.substring(1);
+                return `${h}:${m}`;
+            };
+
+            const time = `${formatTime(tStart)} - ${formatTime(tEnd) || '...'}`;
+
+            const key = date + "|" + day;
+            if(!examRoutineData[key]) examRoutineData[key] = {};
+            if(!examRoutineData[key][time]) examRoutineData[key][time] = [];
+
+            examRoutineData[key][time].push(sub);
+
+            renderExamPreview();
+            saveExamData();
+            Swal.fire({ icon: 'success', title: 'স্লট যোগ হয়েছে', timer: 1000, showConfirmButton: false, ...iosAlert });
+        }
+        function renderExamPreview() {
+            const area = document.getElementById('exam-preview-area');
+            if(!area) return;
+
+            let html = `<h3 class="text-xs font-bold text-gray-400 uppercase mb-2">পরীক্ষার স্লটসমূহ:</h3>`;
+            let hasData = false;
+
+            for (let key in examRoutineData) {
+                const [date, day] = key.split('|');
+                for (let time in examRoutineData[key]) {
+                    examRoutineData[key][time].forEach((sub, i) => {
+                        hasData = true;
+                        html += `
+                            <div class="ios-card flex justify-between items-center p-3 mb-2 border-l-4 border-purple-500">
+                                <div>
+                                    <span class="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">${toBn(date)} (${day}) | ${toBn(time)}</span>
+                                    <p class="text-sm font-bold mt-1">${sub}</p>
+                                </div>
+                                <button onclick="deleteExamSlot('${key}','${time}',${i})" class="text-red-400 p-2">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>`;
+                    });
+                }
+            }
+
+            area.innerHTML = hasData ? html : `<p class="text-center text-gray-400 text-xs italic">কোনো স্লট নেই।</p>`;
+        }
+        function deleteExamSlot(key, time, i) {
+            if (examRoutineData[key] && examRoutineData[key][time]) {
+                examRoutineData[key][time].splice(i, 1);
+                if (examRoutineData[key][time].length === 0) delete examRoutineData[key][time];
+                if (Object.keys(examRoutineData[key]).length === 0) delete examRoutineData[key];
+            }
+            renderExamPreview(); 
+            saveExamData();
+        }
+
+        function saveExamData() {
+            localStorage.setItem("examRoutineData", JSON.stringify(examRoutineData));
+        }
+
+        function printExamRoutine() {
+            const title = document.getElementById('ex-rou-title').value || "পরীক্ষা";
+            const dept = document.getElementById('ex-rou-dept').value || "সকল";
+            const sem = document.getElementById('ex-rou-sem').value || "সকল";
+            const p = document.getElementById('printArea');
+
+            // বর্তমান সাল বের করার লজিক (রুটিনের প্রথম তারিখ থেকে সাল নিবে)
+            let displayYear = "২০২৬"; 
+            const keys = Object.keys(examRoutineData);
+            if(keys.length > 0) {
+                // key format: "05-04-2026|রবিবার"
+                const firstDate = keys[0].split('|')[0]; 
+                const yearPart = firstDate.split('-')[2]; // এখান থেকে ২০২৬ বা ২০২৭ নিবে
+                displayYear = toBn(yearPart);
+            }
+
+            let tableRows = "";
+            for (let key in examRoutineData) {
+                const [date, day] = key.split('|');
+                for (let time in examRoutineData[key]) {
+                    let subs = examRoutineData[key][time];
+                    tableRows += `<tr>
+                        <td style="border: 1px solid black; padding: 15px 5px; font-size: 13px; font-weight: 500; line-height: 1.8;">${toBn(date)}<br>${day}</td>
+                        <td style="border: 1px solid black; padding: 0; vertical-align: middle;">
+                            ${subs.map((s, index) => `<div style="padding: 10px 5px; font-size: 14px; font-weight: 500; line-height: 1.6; ${index < subs.length - 1 ? 'border-bottom: 0.8px solid #000;' : ''}">${toBn(s)}</div>`).join('')}
+                        </td>
+                        <td style="border: 1px solid black; padding: 15px 5px; font-size: 13px; font-weight: 500; line-height: 1.8;">${toBn(time)}</td>
+                    </tr>`;
+                }
+            }
+
+            p.innerHTML = `<div style="font-family:'SolaimanLipi', Arial, sans-serif; position: relative; padding:40px 60px; background:white; color:black; text-align:center;">${watermarkHtml}
+                <p style="margin:0; font-size:15px;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা।</p>
+                <h1 style="font-size:22px; font-weight:bold; margin:5px 0; border-bottom: 1.5px solid black; display:inline-block;">ডিপ্লোমা ইন-ইঞ্জিনিয়ারিং</h1>
+                <!-- এখানে সালটি এখন ডাইনামিক করা হয়েছে -->
+                <p style="margin:10px 0 2px 0; font-size:18px; font-weight:600;">${toBn(title)}- ${displayYear}</p>
+                <p style="margin-bottom:20px; font-size:16px;">টেকনোলজিঃ ${sem} পর্ব (${dept})</p>
+                <table style="width:100%; border-collapse:collapse; border: 1.2px solid #000;">
+                    <thead><tr style="background:#f9f9f9;"><th style="border: 1px solid #000; padding:10px; font-size:14px; width:20%;">বার/তারিখ</th><th style="border: 1px solid #000; padding:10px; font-size:14px; width:55%;">বিষয়</th><th style="border: 1px solid #000; padding:10px; font-size:14px; width:25%;">সময়</th></tr></thead>
+                    <tbody>${tableRows}</tbody>
+                </table>
+                <div style="margin-top:60px; display:flex; justify-content:space-between; padding:0 30px;">
+                    <p style="border-top:1px solid black; width:130px; padding-top:5px; font-size:14px; font-weight:bold;">প্রস্তুতকারক</p>
+                    <p style="border-top:1px solid black; width:130px; padding-top:5px; font-size:14px; font-weight:bold;">অধ্যক্ষ</p>
+                </div>
+            </div>`;
+            
+            setTimeout(() => { window.print(); }, 500);
+        }
+        // ১১. সেটিংস ও নিরাপত্তা
+        function updateSecurity() {
+            const u = document.getElementById('set-user')?.value;
+            const p = document.getElementById('set-pass')?.value;
+            if (u) localStorage.setItem("appUser", u);
+            if (p) localStorage.setItem("appPass", p);
+            if (u || p) {
+                Swal.fire({ icon: 'success', title: 'সেভ হয়েছে!', text: 'পরবর্তী লগইন থেকে নতুন তথ্য কাজ করবে।', ...iosAlert });
+                if(u) document.getElementById('set-user').value = "";
+                if(p) document.getElementById('set-pass').value = "";
+            }
+        }
+
+        // ১২. প্রশ্নপত্র মেকার লজিক
+        function updateQuestionSubjects() {
+            let d = document.getElementById('q-dept')?.value;
+            const s = document.getElementById('q-sem')?.value;
+            const sel = document.getElementById('q-sub-auto');
+            if(!sel) return;
+            if(d === "সকল") d = "Civil"; 
+            sel.innerHTML = `<option value="">বই সিলেক্ট করুন</option>`;
+            if (d && s && subjectDatabase[d] && subjectDatabase[d][s]) {
+                subjectDatabase[d][s].forEach(b => sel.innerHTML += `<option value="${b}">${b}</option>`);
+            }
+        }
+
+        function printQuestionSheet() {
+    const title = document.getElementById('q-exam-title').value || "পরীক্ষা";
+    const deptEng = document.getElementById('q-dept').value;
+    const sem = document.getElementById('q-sem').value || "N/A";
+    const sub = document.getElementById('q-sub-manual').value || document.getElementById('q-sub-auto').value || "N/A";
+    const time = document.getElementById('q-time').value || "N/A";
+    const marks = document.getElementById('q-marks').value || "N/A";
+    const inst = document.getElementById('q-instructions').value;
+    const marksA = document.getElementById('q-part-a-marks').value;
+    const marksB = document.getElementById('q-part-b-marks').value;
+    const marksC = document.getElementById('q-part-c-marks').value;
+
+    const deptMapping = { "সকল": "সকল টেকনোলজি", "Civil": "সিভিল", "Electrical": "ইলেকট্রিক্যাল", "Mechanical": "মেকানিক্যাল", "Computer": "কম্পিউটার" };
+    const deptBn = deptMapping[deptEng] || deptEng;
+
+    const partA = document.getElementById('q-part-a').value.split('\n').filter(q => q.trim() !== "");
+    const partB = document.getElementById('q-part-b').value.split('\n').filter(q => q.trim() !== "");
+    const partC = document.getElementById('q-part-c').value.split('\n').filter(q => q.trim() !== "");
+    const printArea = document.getElementById('printArea');
+
+    let content = `<div style="font-family: 'SolaimanLipi', Arial, sans-serif; position: relative; padding: 40px 60px; background: white; color: black; line-height: 1.4;">${watermarkHtml}
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="font-size: 22px; font-weight: bold; margin: 0;">দক্ষিণবঙ্গ পলিটেকনিক ইনস্টিটিউট, ভোলা।</h1>
+            <h2 style="font-size: 18px; font-weight: normal; margin: 5px 0;">ডিপ্লোমা ইন-ইঞ্জিনিয়ারিং</h2>
+            <h2 style="font-size: 17px; font-weight: 600; margin: 0;">${toBn(title)}- ২০২৬</h2>
+            <h3 style="font-size: 15px; font-weight: normal; margin: 5px 0;">বিষয়: ${toBn(sub)}</h3>
+            <h3 style="font-size: 15px; font-weight: normal; margin: 0;">টেকনোলজি: ${deptBn} (${sem} পর্ব)</h3>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 10px; font-size: 14px;">
+            <span>সময়: ${toBn(time)}</span><span>পূর্ণমান: ${toBn(marks)}</span>
+        </div>
+        ${inst ? `<p style="text-align: center; font-size: 13px; font-weight: bold; margin-bottom: 20px;">বি:দ্র: ${inst}</p>` : ''}
+        <div style="text-align: left; font-size: 15px;">
+            ${partA.length > 0 ? `<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;"><p style="font-weight: bold; text-decoration: underline; margin: 0;">ক-বিভাগ</p>${marksA ? `<span style="margin-left: 10px; font-weight: bold;">(${toBn(marksA)})</span>` : ''}</div>${partA.map((q, i) => `<p style="margin: 8px 0;">${toBn(i + 1)}. ${q}</p>`).join('')}` : ''}
+            ${partB.length > 0 ? `<div style="display: flex; justify-content: center; align-items: center; margin-top: 30px;"><p style="font-weight: bold; text-decoration: underline; margin: 0;">খ-বিভাগ</p>${marksB ? `<span style="margin-left: 10px; font-weight: bold;">(${toBn(marksB)})</span>` : ''}</div>${partB.map((q, i) => `<p style="margin: 8px 0;">${toBn(i + 1)}. ${q}</p>`).join('')}` : ''}
+            ${partC.length > 0 ? `<div style="display: flex; justify-content: center; align-items: center; margin-top: 30px;"><p style="font-weight: bold; text-decoration: underline; margin: 0;">গ-বিভাগ</p>${marksC ? `<span style="margin-left: 10px; font-weight: bold;">(${toBn(marksC)})</span>` : ''}</div>${partC.map((q, i) => `<p style="margin: 8px 0;">${toBn(i + 1)}. ${q}</p>`).join('')}` : ''}
+        </div>
+    </div>`;
+
+    printArea.innerHTML = content;
+    if (window.MathJax) {
+        MathJax.typesetPromise([printArea]).then(() => { setTimeout(() => { window.print(); }, 1000); });
+    } else {
+        setTimeout(() => { window.print(); }, 500);
+    }
+}
+
+function clearAllSystemData() {
+            Swal.fire({
+                title: 'পুরো সিস্টেম রিসেট?',
+                text: "আপনার সকল সেভ করা রেজাল্ট এবং রুটিন ডাটা চিরতরে ডিলিট হয়ে যাবে!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff3b30',
+                cancelButtonColor: '#007aff',
+                confirmButtonText: 'হ্যাঁ, রিসেট করুন',
+                cancelButtonText: 'বাতিল',
+                ...iosAlert
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem("routineData");
+                    localStorage.removeItem("studentsList");
+                    localStorage.removeItem("examRoutineData");
+                    Swal.fire({ icon: 'success', title: 'সিস্টেম ক্লিনড!', text: 'সকল ডাটা মুছে ফেলা হয়েছে।', ...iosAlert }).then(() => {
+                        location.reload();
+                    });
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>
